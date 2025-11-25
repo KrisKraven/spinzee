@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <div id="arrow">Down Arrow</div>
+  <div id="arrow">↓</div>
   <div id="wheel"></div>
 
   <div class="legend">
@@ -32,4 +32,15 @@
       if(s)return;
       s=true;this.disabled=true;this.textContent="Spinning...";
       const w=document.getElementById("wheel");
-      const final=3600+(Math.floor(Math.random()*4
+      const final=3600+(Math.floor(Math.random()*4)*seg);
+      w.style.transition="all 4.5s cubic-bezier(0.25,0.8,0.25,1)";
+      w.style.transform="rotate("+final+"deg)";
+      setTimeout(()=>{
+        const win=prizes[Math.floor(Math.random()*prizes.length)];
+        document.getElementById("r").innerHTML=win.includes("Try again") ? win : "JACKPOT — "+win;
+        this.textContent="Already spun!";
+      },4800);
+    };
+  </script>
+</body>
+</html>
