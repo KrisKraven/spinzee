@@ -3,45 +3,33 @@
 <head>
   <style>
     body{margin:0;background:linear-gradient(#667eea,#764ba2);color:white;font-family:Arial;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;overflow:hidden}
-    #wheel{width:320px;height:320px;border-radius:50%;background:conic-gradient(#fffa65 0% 25%, #ff4757 25% 50%, #ffa502 50% 75%, #32ff7e 75% 100%);box-shadow:0 0 60px rgba(0,0,0,0.8)}
-    #arrow{position:absolute;top:-70px;left:50%;transform:translateX(-50%);font-size:110px;z-index:10}
-    button{margin-top:50px;padding:20px 70px;font-size:32px;background:white;color:#667eea;border:none;border-radius:50px;cursor:pointer;box-shadow:0 15px 30px rgba(0,0,0,0.4)}
-    button:disabled{background:#999;cursor:not-allowed}
-    .legend{margin-top:30px;display:flex;gap:35px;font-size:22px;font-weight:bold}
-    .leg{color:#000;padding:10px 24px;border-radius:14px}
+    #wheel{width:340px;height:340px;border-radius:50%;background:conic-gradient(#ff6b6b,#feca57,#48dbfb,#ff9ff3,#54a0ff,#5f27cd,#c8d6e5,#1dd1a1);box-shadow:0 0 70px rgba(0,0,0,0.9)}
+    #arrow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);font-size:130px;z-index:10}
+    button{margin-top:60px;padding:22px 80px;font-size:34px;background:white;color:#667eea;border:none;border-radius:50px;cursor:pointer;box-shadow:0 20px 40px rgba(0,0,0,0.4)}
+    button:disabled{background:#bbb;cursor:not-allowed}
   </style>
 </head>
 <body>
   <div id="arrow">↓</div>
   <div id="wheel"></div>
-
-  <div class="legend">
-    <div class="leg" style="background:#fffa65">Starbucks</div>
-    <div class="leg" style="background:#ff4757">Amazon</div>
-    <div class="leg" style="background:#ffa502">Target</div>
-  </div>
-
   <button id="b">SPIN NOW!</button>
-  <div id="r" style="margin-top:60px;font-size:40px;font-weight:bold"></div>
+  <div id="r" style="margin-top:70px;font-size:48px;font-weight:bold;text-shadow:0 0 20px #000"></div>
 
   <script>
     let s=false;
-    const prizes = ["Starbucks Gift Card!", "Amazon Gift Card!", "Target Gift Card!", "Try again!"];
-    const seg = 90;
-    const offset = 45;
+    const prizes=["Amazon Gift Card!","Target Gift Card!","Starbucks Gift Card!","Try again!"];
     document.getElementById("b").onclick=function(){
-      if(s) return;
-      s=true; this.disabled=true; this.textContent="Spinning...";
+      if(s)return;
+      s=true;this.disabled=true;this.textContent="Spinning...";
       const w=document.getElementById("wheel");
-      const randomSeg = Math.floor(Math.random()*4);
-      const finalDeg = 3600 + (randomSeg * seg) + offset;
-      w.style.transition="all 4.5s cubic-bezier(0.25,0.8,0.25,1)";
-      w.style.transform="rotate("+finalDeg+"deg)";
+      const final=3600+Math.random()*360+3240;
+      w.style.transition="all 5s cubic-bezier(0.17,0.67,0.12,1)";
+      w.style.transform="rotate("+final+"deg)";
       setTimeout(()=>{
-        const win = prizes[randomSeg];
-        document.getElementById("r").innerHTML = win.includes("Try again") ? win : "JACKPOT — "+win;
+        const win=prizes[Math.floor(Math.random()*prizes.length)];
+        document.getElementById("r").innerHTML=win.includes("Try again")?"Try again!":"JACKPOT — "+win;
         this.textContent="Already spun!";
-      },4800);
+      },5300);
     };
   </script>
 </body>
