@@ -16,17 +16,17 @@
   <div id="r" style="margin-top:70px;font-size:48px;font-weight:bold;text-shadow:0 0 20px #000"></div>
 
   <script>
-    const prizes = ["Amazon Gift Card!","Target Gift Card!","Starbucks Gift Card!","Try again!"];
+    const prizes=["Amazon Gift Card!","Target Gift Card!","Starbucks Gift Card!","Try again!"];
     function getWeek(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+4-(d.getDay()||7));const weekStart=new Date(d.getFullYear(),0,1);const weekNum=Math.ceil(((d-weekStart)/86400000+1)/7);return d.getFullYear()+"-W"+weekNum;}
-    const thisWeek=getWeek();const spunWeek=localStorage.getItem("spunWeek");
+    const thisWeek=getWeek();const spun=localStorage.getItem("spunWeek");
 
-    if(spunWeek===thisWeek){
+    if(spun===thisWeek){
       document.getElementById("b").disabled=true;document.getElementById("b").textContent="Already spun this week!";
-      document.getElementById("r").innerHTML=localStorage.getItem("weekPrize").includes("Try again")?localStorage.getItem("weekPrize"):"JACKPOT — "+localStorage.getItem("weekPrize");
+      document.getElementById("r").innerHTML=localStorage.getItem("prize").includes("Try again")?localStorage.getItem("prize"):"JACKPOT — "+localStorage.getItem("prize");
     }
 
     document.getElementById("b").onclick=function(){
-      if(spunWeek===thisWeek)return;
+      if(spun===thisWeek)return;
       this.disabled=true;this.textContent="Spinning...";
       const w=document.getElementById("wheel");
       w.style.transition="all 5s cubic-bezier(0.17,0.67,0.12,1)";
@@ -34,11 +34,12 @@
       setTimeout(()=>{
         const win=prizes[Math.floor(Math.random()*prizes.length)];
         document.getElementById("r").innerHTML=win.includes("Try again")?win:"JACKPOT — "+win;
-        this.textContent="Already spun this week!";
-        localStorage.setItem("spunWeek",thisWeek);localStorage.setItem("weekPrize",win);
+        localStorage.setItem("spunWeek",thisWeek);localStorage.setItem("prize",win);
 
-        // Submits the parent Beezer form with the prize
-        if(window.parent) window.parent.postMessage({type:"submitWithPrize", prize:win}, "*");
+        // Fill hidden required prize field + submit parent form
+        if(window.parent){
+          window.parent.postMessage({type:"fillAndSubmit",prize:win},"*");
+        }
       },5300);
     };
   </script>
