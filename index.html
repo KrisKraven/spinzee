@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body{margin:0;background:linear-gradient(#667eea,#764ba2);color:white;font-family:Arial;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;overflow:hidden}
+    #wheel{width:280px;height:280px;border-radius:50%;background:conic-gradient(#ff4757 0% 25%,#ffa502 25% 50%,#fffa65 50% 75%,#32ff7e 75% 100%);box-shadow:0 0 40px rgba(0,0,0,0.7);position:relative}
+    #arrow{position:absolute;top:-35px;left:50%;transform:translateX(-50%);font-size:60px}
+    button{margin-top:30px;padding:16px 50px;font-size:28px;background:white;color:#667eea;border:none;border-radius:50px;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,0.3)}
+    button:disabled{background:#999;cursor:not-allowed}
+  </style>
+</head>
+<body>
+  <div id="arrow">Down Arrow</div>
+  <div id="wheel"></div>
+  <h1>Ready to win?</h1>
+  <button id="b">SPIN NOW!</button>
+  <div id="r" style="margin-top:50px;font-size:32px;font-weight:bold"></div>
+  <script>
+    let s=false;
+    document.getElementById("b").onclick=function(){
+      if(s)return;
+      s=true;
+      this.disabled=true;
+      this.textContent="Spinning...";
+      const w=document.getElementById("wheel");
+      w.style.transition="all 4s cubic-bezier(0.25,0.8,0.25,1)";
+      w.style.transform="rotate("+(3600+Math.random()*360)+"deg)";
+      setTimeout(()=>{
+        const p=["Better luck next time!","You won 10% OFF!","You won 20% OFF!","JACKPOT — Free Gift!"];
+        document.getElementById("r").innerHTML=p[Math.floor(Math.random()*p.length)];
+        this.textContent="Already spun!";
+      },4500);
+    };
+  </script>
+</body>
+</html>
