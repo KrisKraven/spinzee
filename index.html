@@ -3,7 +3,7 @@
 <head>
   <style>
     body{margin:0;background:linear-gradient(#667eea,#764ba2);color:white;font-family:Arial;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;overflow:hidden}
-    #wheel{width:320px;height:320px;border-radius:50%;background:conic-gradient(#ff4757 0% 25%, #ffa502 25% 50%, #fffa65 50% 75%, #32ff7e 75% 100%);box-shadow:0 0 60px rgba(0,0,0,0.8)}
+    #wheel{width:320px;height:320px;border-radius:50%;background:conic-gradient(#fffa65 0% 25%, #ff4757 25% 50%, #ffa502 50% 75%, #32ff7e 75% 100%);box-shadow:0 0 60px rgba(0,0,0,0.8)}
     #arrow{position:absolute;top:-70px;left:50%;transform:translateX(-50%);font-size:110px;z-index:10}
     button{margin-top:50px;padding:20px 70px;font-size:32px;background:white;color:#667eea;border:none;border-radius:50px;cursor:pointer;box-shadow:0 15px 30px rgba(0,0,0,0.4)}
     button:disabled{background:#999;cursor:not-allowed}
@@ -16,9 +16,9 @@
   <div id="wheel"></div>
 
   <div class="legend">
+    <div class="leg" style="background:#fffa65">Starbucks</div>
     <div class="leg" style="background:#ff4757">Amazon</div>
     <div class="leg" style="background:#ffa502">Target</div>
-    <div class="leg" style="background:#fffa65">Starbucks</div>
   </div>
 
   <button id="b">SPIN NOW!</button>
@@ -26,7 +26,7 @@
 
   <script>
     let s=false;
-    const prizes=["Amazon Gift Card!","Target Gift Card!","Starbucks Gift Card!","Try again!"];
+    const prizes=["Starbucks Gift Card!","Amazon Gift Card!","Target Gift Card!","Try again!"];
     const seg=90;
     const offset=45;
     document.getElementById("b").onclick=function(){
