@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <div id="arrow">Down Arrow</div>
+  <div id="arrow">↓</div>
   <div id="wheel"></div>
 
   <div class="legend">
@@ -28,7 +28,7 @@
     let s=false;
     const prizes = ["Starbucks Gift Card!", "Amazon Gift Card!", "Target Gift Card!", "Try again!"];
     const seg = 90;
-    const offset = 45;                     // lands in the middle of each segment
+    const offset = 45;
     document.getElementById("b").onclick=function(){
       if(s) return;
       s=true; this.disabled=true; this.textContent="Spinning...";
