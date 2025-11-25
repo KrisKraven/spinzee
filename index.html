@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <div id="arrow">↓</div>
+  <div id="arrow">Down Arrow</div>
   <div id="wheel"></div>
 
   <div class="legend">
@@ -26,20 +26,20 @@
 
   <script>
     let s=false;
-    const prizes=["Starbucks Gift Card!","Amazon Gift Card!","Target Gift Card!","Try again!"];
-    const seg=90;
-    const offset=45;
+    const prizes = ["Starbucks Gift Card!", "Amazon Gift Card!", "Target Gift Card!", "Try again!"];
+    const seg = 90;
+    const offset = 45;                     // lands in the middle of each segment
     document.getElementById("b").onclick=function(){
-      if(s)return;
-      s=true;this.disabled=true;this.textContent="Spinning...";
+      if(s) return;
+      s=true; this.disabled=true; this.textContent="Spinning...";
       const w=document.getElementById("wheel");
-      const randomSeg=Math.floor(Math.random()*4);
-      const finalDeg=3600 + (randomSeg*seg) + offset;
+      const randomSeg = Math.floor(Math.random()*4);
+      const finalDeg = 3600 + (randomSeg * seg) + offset;
       w.style.transition="all 4.5s cubic-bezier(0.25,0.8,0.25,1)";
       w.style.transform="rotate("+finalDeg+"deg)";
       setTimeout(()=>{
-        const win=prizes[randomSeg];
-        document.getElementById("r").innerHTML=win.includes("Try again") ? win : "JACKPOT — "+win;
+        const win = prizes[randomSeg];
+        document.getElementById("r").innerHTML = win.includes("Try again") ? win : "JACKPOT — "+win;
         this.textContent="Already spun!";
       },4800);
     };
