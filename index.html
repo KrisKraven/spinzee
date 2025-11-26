@@ -2,35 +2,14 @@
 <html>
 <head>
   <style>
-    body{margin:0;background:linear-gradient(#667eea,#764ba2);color:white;font-family:Arial;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;overflow:hidden}
-    input{padding:12px;margin:10px 0;width:280px;border-radius:12px;border:none;font-size:18px}
-    .wheel-wrapper{
-      width:340px;
-      height:340px;
-      margin:20px auto;
-      position:relative;
-      flex-shrink:0;
-    }
-    #wheel{
-      width:100%;
-      height:100%;
-      border-radius:50%;
-      background:conic-gradient(#ff6b6b,#feca57,#48dbfb,#ff9ff3,#54a0ff,#5f27cd,#c8d6e5,#1dd1a1);
-      box-shadow:0 0 70px rgba(0,0,0,0.9);
-    }
-    #arrow{
-      position:absolute;
-      top:-60px;
-      left:50%;
-      transform:translateX(-50%);
-      font-size:130px;
-      z-index:10;
-    }
-    button{
-      margin-top:20px;padding:22px 80px;font-size:36px;background:white;color:#667eea;border:none;border-radius:50px;cursor:pointer;box-shadow:0 20px 40px rgba(0,0,0,0.4)
-    }
+    body{margin:0;background:linear-gradient(#667eea,#764ba2);color:white;font-family:Arial;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100vh;overflow:hidden;padding-top:20px;box-sizing:border-box}
+    input{padding:12px;margin:8px;width:280px;border-radius:12px;border:none;font-size:18px}
+    .wheel-wrapper{width:340px;height:340px;position:relative;margin:20px 0;flex-shrink:0}
+    #wheel{width:100%;height:100%;border-radius:50%;background:conic-gradient(#ff6b6b,#feca57,#48dbfb,#ff9ff3,#54a0ff,#5f27cd,#c8d6e5,#1dd1a1);box-shadow:0 0 70px rgba(0,0,0,0.9)}
+    #arrow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);font-size:130px;z-index:10}
+    button{margin:20px;padding:22px 80px;font-size:36px;background:white;color:#667eea;border:none;border-radius:50px;cursor:pointer;box-shadow:0 20px 40px rgba(0,0,0,0.4)}
     button:disabled{background:#bbb;cursor:not-allowed}
-    #r{margin-top:50px;font-size:48px;font-weight:bold;text-shadow:0 0 20px #000}
+    #r{min-height:120px;font-size:48px;font-weight:bold;text-shadow:0 0 20px #000;text-align:center;padding:0 20px}
   </style>
 </head>
 <body>
@@ -52,7 +31,8 @@
     const thisWeek=getWeek();const spun=localStorage.getItem("spunWeek");
 
     if(spun===thisWeek){
-      document.getElementById("b").disabled=true;document.getElementById("b").textContent="Already spun this week!";
+      document.getElementById("b").disabled=true;
+      document.getElementById("b").textContent="Already spun this week!";
       document.getElementById("r").innerHTML=localStorage.getItem("prize").includes("Try again")?localStorage.getItem("prize"):"JACKPOT — "+localStorage.getItem("prize");
     }
 
@@ -61,14 +41,20 @@
       const email=document.getElementById("email").value.trim();
       if(!name||!email){alert("Please enter name and email");return;}
       if(spun===thisWeek)return;
-      this.disabled=true;this.textContent="Spinning...";
+
+      this.disabled=true;
+      this.textContent="Spinning...";
       const w=document.getElementById("wheel");
       w.style.transition="all 5s cubic-bezier(0.17,0.67,0.12,1)";
       w.style.transform="rotate("+(3600+Math.random()*360+3240)+"deg)";
+
       setTimeout(()=>{
         const win=prizes[Math.floor(Math.random()*prizes.length)];
         document.getElementById("r").innerHTML=win.includes("Try again")?win:"JACKPOT — "+win;
-        localStorage.setItem("spunWeek",thisWeek);localStorage.setItem("prize",win);
+        document.getElementById("b").textContent="Already spun this week!";
+        localStorage.setItem("spunWeek",thisWeek);
+        localStorage.setItem("prize",win);
+
         fetch("https://hook.us2.make.com/las2vf451hpgxb9y7vaaotqfatqjjys0",{
           method:"POST",
           body:JSON.stringify({name:name,email:email,prize:win,date:new Date().toLocaleString()})
